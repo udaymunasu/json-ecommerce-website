@@ -39,13 +39,16 @@
       />
     </div>
 
-    <input
-      type="text"
-      class="form-input"
-      placeholder="Enter Product Image URL"
-      name="image"
-      ngModel
-    />
+    <div class="upload-image-container">
+      <div class="upload-area" (click)="fileInput.click()">
+        <input type="file" #fileInput (change)="onFileSelected($event)">
+        <p>Click here or drag and drop an image to upload</p>
+      </div>
+    
+      <div class="preview" *ngIf="imageUrl">
+        <img [src]="imageUrl" alt="Uploaded Image">
+      </div>
+    </div>
 
     <textarea
       type="text"

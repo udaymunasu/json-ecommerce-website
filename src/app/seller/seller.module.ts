@@ -7,6 +7,7 @@ import { SellerComponent } from './seller.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SellerHomeComponent } from './seller-home/seller-home.component';
 import { SellerAddProductComponent } from './seller-add-product/seller-add-product.component';
+import { SellerUpdateProductComponent } from './seller-update-product/seller-update-product.component';
 
 
 @NgModule({
@@ -14,7 +15,8 @@ import { SellerAddProductComponent } from './seller-add-product/seller-add-produ
     SellerComponent,
     SellerAuthComponent,
     SellerHomeComponent,
-    SellerAddProductComponent
+    SellerAddProductComponent,
+    SellerUpdateProductComponent
   ],
   imports: [
     CommonModule,

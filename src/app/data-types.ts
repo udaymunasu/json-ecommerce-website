@@ -13,7 +13,7 @@ export interface product {
   price: number;
   category: string;
   color: string;
-  image: string;
+  image: string | null;
   description: string;
   id: number;
   quantity: undefined | number;

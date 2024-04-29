@@ -22,6 +22,7 @@ import { HeaderComponent } from './header/header.component';
 import {MatInputModule} from '@angular/material/input';
 import { SellerModule } from './seller/seller.module';
 import { HomeComponent } from './home/home.component';
+import { CarouselComponent } from './carousel/carousel.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { HomeComponent } from './home/home.component';
     SignupComponent,
     HeaderComponent,
     HomeComponent,
+    CarouselComponent,
 
   ],
   imports: [

@@ -15,6 +15,8 @@ export class SellerHomeComponent implements OnInit {
   productMessage: undefined | string;
   icon = faTrash;
   iconEdit=faEdit;
+
+  noOfProducts: any;
   constructor(private product: ProductService) {}
 
   ngOnInit(): void {
@@ -38,6 +40,7 @@ export class SellerHomeComponent implements OnInit {
     this.product.productList().subscribe((result) => {
       if (result) {
         this.productList = result;
+        this.noOfProducts = this.productList.length;
         console.log(" this.productList",  this.productList)
       }
     });

@@ -15,6 +15,14 @@
     </div>
   </ng-template>
 </ngb-carousel> -->
+
+<app-carousel *ngIf="trendyProducts" [slides]="trendyProducts" 
+[slideStep]="300" 
+[interval]="5000">
+  <!-- <app-slider> -->
+  
+  <!-- </app-slider> -->
+</app-carousel>
 <div class="product-list-wrapper">
   <h1>Trendy Products</h1>
   <div class="row">
