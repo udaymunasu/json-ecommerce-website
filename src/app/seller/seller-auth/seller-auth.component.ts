@@ -10,20 +10,28 @@ import { SellerService } from 'src/app/services/seller.service';
 export class SellerAuthComponent implements OnInit {
   step: number = 1;
   formData: any = {};
+  sellerLogin: any = {};
   showLogin: boolean;
 
+  authError: String = '';
   constructor(private seller: SellerService) {}
 
-  ngOnInit(): void {}
-
-
-  
+  ngOnInit(): void {
+    this.seller.reloadSeller()
+  }
 
   onSubmit() {
     if (this.step === 3) {
       console.log('foerm Data', this.formData);
-      this.signUp()
+      this.signUp();
     }
+  }
+
+  openLogin() {
+    this.showLogin = true;
+  }
+  openSignUp() {
+    this.showLogin = false;
   }
 
   nextStep() {
@@ -41,6 +49,15 @@ export class SellerAuthComponent implements OnInit {
 
   signUp() {
     console.log('foerm Data', this.formData);
-    this.seller.userSignUp( this.formData)
+    this.seller.userSignUp(this.formData);
+  }
+
+  login(): void {
+    this.seller.userLogin(this.sellerLogin);
+    this.seller.isLoginError.subscribe((isError)=>{
+      if(isError){
+        this.authError="Email or password is not correct";
+      }
+    })
   }
 }

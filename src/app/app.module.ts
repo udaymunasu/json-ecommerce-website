@@ -44,7 +44,8 @@ import { HomeComponent } from './home/home.component';
     MatIconModule,
     MatToolbarModule,
     MatButtonModule,
-    MatInputModule
+    MatInputModule,
+    
   ],
   providers: [],
   bootstrap: [AppComponent]

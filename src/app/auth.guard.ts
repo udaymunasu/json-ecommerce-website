@@ -6,27 +6,25 @@ import {
   UrlTree,
 } from '@angular/router';
 import { Observable } from 'rxjs';
+import { SellerService } from './services/seller.service';
 // import { SellerService } from './modules-ex/services/seller.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthGuard implements CanActivate {
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
-    throw new Error('Method not implemented.');
+  constructor(private sellerService: SellerService) {}
+  canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ):
+    | Observable<boolean | UrlTree>
+    | Promise<boolean | UrlTree>
+    | boolean
+    | UrlTree {
+    if (localStorage.getItem('seller')) {
+      return true;
+    }
+    return this.sellerService.isSellerLoggedIn;
   }
-  // constructor(private sellerService: SellerService) {}
-  // canActivate(
-  //   route: ActivatedRouteSnapshot,
-  //   state: RouterStateSnapshot
-  // ):
-  //   | Observable<boolean | UrlTree>
-  //   | Promise<boolean | UrlTree>
-  //   | boolean
-  //   | UrlTree {
-  //   if (localStorage.getItem('seller')) {
-  //     return true;
-  //   }
-    // return this.sellerService.isSellerLoggedIn;
-  // }
 }

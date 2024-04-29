@@ -36,28 +36,30 @@
           Submit
         </button>
       </div>
-      <a class="auth-toggle-link">Already have account? Click for Login</a>
+      <a class="auth-toggle-link" (click)="openLogin()">Already have account? Click for Login</a>
     </form>
   </div>
 
-  <!-- <div *ngIf="showLogin" class="login">
+   <div *ngIf="showLogin" class="login">
     <h1>Seller Login</h1>
     <p class="error-p"></p>
-    <form class="common-form">
+    <form class="common-form" (ngSubmit)="login()">
       <input
         type="text"
         class="form-input"
         placeholder="Enter Email"
         name="email"
+        [(ngModel)]="sellerLogin.email"
       />
       <input
         type="password"
         class="form-input"
         placeholder="Enter Password"
         name="password"
+        [(ngModel)]="sellerLogin.password"
       />
       <button class="form-button">Login</button>
-      <a class="auth-toggle-link">Don't have account? Click for sign-up</a>
+      <a class="auth-toggle-link" (click)="openSignUp()">Don't have account? Click for sign-up</a>
     </form>
-  </div> -->
+  </div> 
 </div>
