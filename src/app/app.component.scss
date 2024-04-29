@@ -1,0 +1,60 @@
+/* Reset some default styles */
+body,
+html {
+    margin: 0;
+    padding: 0;
+}
+
+
+
+/* Apply styles to the container */
+.container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: rgb(255, 255, 255);
+    /* Ensures the container stretches to the full viewport height */
+}
+
+/* Style the header component */
+app-header {
+    background: #ffff;
+    /* Use the primary color of Flipkart or your preferred color */
+    color: #000;
+    /* Text color for header */
+    padding: 10px 0;
+    text-align: center;
+}
+
+/* Style the content area with responsive techniques */
+.content {
+    flex-grow: 1;
+    /* Makes the content area grow to fill available space */
+    display: flex;
+    flex-direction: column;
+    /* Content in a column layout */
+
+    /* Add some padding and maximum width */
+    padding: 20px;
+    // max-width: 1200px;
+    /* Adjust the maximum width to your preference */
+    width: 100%;
+}
+
+/* Apply styles to the footer component */
+app-footer {
+    background: #333;
+    /* Use a dark background color */
+    color: #fff;
+    /* Text color for footer */
+    padding: 10px 0;
+    text-align: center;
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+    .content {
+        padding: 10px;
+        /* Reduce padding for smaller screens */
+    }
+}

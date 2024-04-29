@@ -1,0 +1,49 @@
+<mat-toolbar>
+  <button
+    mat-icon-button
+    class="example-icon"
+    aria-label="Example icon-button with menu icon"
+  >
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span>E commerce</span>
+
+  <div class="input-container">
+    <input type="text" #searchInput placeholder="Search Products" />
+    <button class="input-button">
+      <i class="gg-search"></i>
+    </button>
+  </div>
+
+  <span class="example-spacer"></span>
+  <button class="header-link-buttons"  routerLink="/login">login
+    <span class="px-icons login"></span>
+  </button>
+  <button  class="header-link-buttons" routerLink="/signup">
+    Signup
+    <span class="px-icons hamburger"></span>
+  </button>
+  <button  class="header-link-buttons" routerLink="/home">
+    Home
+    <span class="px-icons user"></span>
+  </button>
+  <button  class="header-link-buttons" routerLink="/seller/seller-auth">Seller</button>
+  <button  class="header-link-buttons" routerLink="/order">
+    Cart(0)
+    <span class="px-icons cart"></span>
+  </button>
+  <button
+    mat-icon-button
+    class="example-icon favorite-icon"
+    aria-label="Example icon-button with heart icon"
+  >
+    <mat-icon>favorite</mat-icon>
+  </button>
+  <button
+    mat-icon-button
+    class="example-icon"
+    aria-label="Example icon-button with share icon"
+  >
+    <mat-icon>share</mat-icon>
+  </button>
+</mat-toolbar>
