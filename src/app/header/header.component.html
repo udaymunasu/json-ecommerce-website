@@ -1,28 +1,21 @@
 <nav class="nav">
   <div class="logo-container">
-    <img
-      class="logo-img"
-      src="https://www.simicart.com/blog/wp-content/uploads/eCommerce-logo-1.jpg"
-      alt="pic"
-    />
+    <img class="logo-img" src="https://www.simicart.com/blog/wp-content/uploads/eCommerce-logo-1.jpg" alt="pic" />
     <a routerLink="">E Comm</a>
   </div>
   <div *ngIf="menuType !== 'seller'" class="nav-search">
-    <input
-      type="text"
-      #searchInput
-      (keyup)="searchProduct($event)"
-      (blur)="hideSearch()"
-      placeholder="Search Products"
-    />
-    <button (click)="submitSearch(searchInput.value)">Search</button>
-    <ul class="suggested-search" *ngIf="searchResult">
-      <li *ngFor="let item of searchResult">
-        <a (mousedown)="redirectToDetails(item.id)">{{ item.name }}</a>
-      </li>
-    </ul>
+    <div class="typeahead">
+      <input type="text" #searchInput  (input)="searchProduct($event)" 
+             placeholder="Search Products" />
+      <span class="px-icons search search-icon"></span> <!-- Search icon -->
+      <ul class="suggested-search" *ngIf=" searchResult">
+        <li *ngFor="let item of searchResult.slice(0, 6)"> <!-- Display up to 6 items -->
+          <a (mousedown)="redirectToDetails(item.id)">{{ item.name }}</a>
+        </li>
+      </ul>
+    </div>
   </div>
-  <div [ngSwitch]="menuType">
+  <div [ngSwitch]="menuType" class="header-list">
     <ul *ngSwitchCase="'default'">
       <li><a routerLink="seller-auth">Seller</a></li>
       <li><a routerLink="home">Home</a></li>
@@ -41,9 +34,7 @@
       <li><a (click)="userLogout()">Logout</a></li>
 
       <li>
-        <a [routerLink]="cartItems > 0 ? 'cart-page' : null"
-          >Cart({{ cartItems }})</a
-        >
+        <a [routerLink]="cartItems > 0 ? 'cart-page' : null">Cart({{ cartItems }})</a>
       </li>
     </ul>
     <ul *ngSwitchCase="'seller'">

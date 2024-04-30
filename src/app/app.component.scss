@@ -12,17 +12,19 @@ html {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    background-color: rgb(255, 255, 255);
+    // background-color: rgb(255, 255, 255);
+    background-color: rgb(241, 242, 244);
     /* Ensures the container stretches to the full viewport height */
 }
 
 /* Style the header component */
 app-header {
+    display: flex;
+    justify-content: space-around;
     background: #ffff;
     /* Use the primary color of Flipkart or your preferred color */
     color: #000;
     /* Text color for header */
-    padding: 10px 0;
     text-align: center;
 }
 

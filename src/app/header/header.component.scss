@@ -1,118 +1,131 @@
 .nav {
+  // background-color: #ffffff; // Whitish background
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  align-items: center;
-  padding: 0 32px;
-}
+  gap: 48px;
+  padding: 10px 20px;
+  // box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.1); // Subtle shadow
 
-.logo-container {
-  display: flex;
-  flex-direction: row;
-  font-size: 28px;
-  align-items: center;
-  a {
-    color: #494d5f;
-    text-decoration: none;
-  }
-
-  .logo-img {
-    width: 80px;
-    height: 80px;
-  }
-}
-
-.nav h1 {
-  color: #494d5f;
-  margin: 0;
-  font-size: 40px;
-}
-.nav .nav-search {
-  flex: 1;
-  display: flex;
-  margin-left: 5%;
-  margin-right: 5%;
-  margin-top: 5px;
-}
-
-.nav .nav-search input {
-  flex: 1;
-  color: #494d5f;
-  border: 1px solid #494d5f;
-  border-radius: 8px 0 0 8px;
-  border-right: none;
-}
-
-.nav .nav-search button {
-  color: #494d5f;
-  border: 1px solid #494d5f;
-  height: 39px;
-  border-radius: 0px 8px 8px 0px;
-}
-
-.nav ul {
-  display: inline-flex;
-  margin: 0;
-  padding: 0;
-  list-style-type: none;
-}
-
-.nav ul li {
-  padding-left: 15px;
-}
-
-.nav ul a {
-  text-decoration: none;
-  color: #494d5f;
-  cursor: pointer;
-}
-
-.suggested-search {
-  position: absolute;
-  top: 40px;
-  z-index: 10;
-  display: list-item !important;
-  border: 1px solid #ddd;
-  background-color: #fff;
-  width: 300px;
-}
-.suggested-search li {
-  padding: 5px;
-  border: 1px solid #ddd;
-}
-.suggested-search li a {
-  cursor: pointer;
-  color: #494d5f;
-}
-.gg-search {
-  box-sizing: border-box;
-  position: relative;
-  display: block;
-  transform: scale(var(--ggs, 1));
-  width: 16px;
-  height: 16px;
-  border: 2px solid;
-  border-radius: 100%;
-  margin-left: -4px;
-  margin-top: -4px;
-
-  &::after {
-    content: "";
-    display: block;
-    box-sizing: border-box;
-    position: absolute;
-    border-radius: 3px;
-    width: 2px;
-    height: 8px;
-    background: currentColor;
-    transform: rotate(-45deg);
-    top: 10px;
-    left: 12px;
-  }
-}
-
-.header-container {
-  .header-links {
+  .logo-container {
     display: flex;
-    flex-flow: wrap;
+    align-items: center;
+
+    .logo-img {
+      height: 40px; // Adjust as needed
+      margin-right: 10px;
+    }
+
+    a {
+      color: #000; // Flipkart's blue
+      font-size: 1.5rem; // Adjust as needed
+      text-decoration: none;
+      font-weight: bold;
+    }
+  }
+
+  .nav-search {
+    position: relative;
+
+    /* Base style for the typeahead component */
+    /* Base style for the typeahead component */
+    .typeahead {
+      position: relative;
+
+      input[type="text"] {
+        width: calc(100% - 32px);
+        height: 40px;
+        padding: 0px 0px 0px 46px;
+        font-size: 16px;
+        border: 1px solid #DBE1E6;
+        border-radius: 8px;
+        background-color: #f0f5ff;
+        box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
+        transition: box-shadow 0.3s, border-color 0.3s;
+
+        &:focus {
+          outline: none;
+          border-color: #007BFF;
+          box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+        }
+      }
+
+      .search-icon {
+        position: absolute;
+        top: 50%;
+        left: 10px;
+        transform: translateY(-50%);
+        color: #999;
+        /* Adjust icon color */
+        font-size: 18px;
+      }
+    }
+
+    /* Style for the dropdown list */
+    .suggested-search {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      position: absolute;
+      width: 100%;
+      /* Adjust width to match input */
+      background-color: #fff;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      z-index: 9999;
+      display: none;
+      /* Initially hide the dropdown */
+    }
+
+    /* Adjust display when the input is focused */
+    .typeahead input[type="text"]:focus+.search-icon+.suggested-search {
+      display: block;
+    }
+
+    .suggested-search li {
+      padding: 10px 15px;
+      /* Adjust padding for list items */
+      border-bottom: 1px solid #eee;
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      a {
+        display: block;
+        color: #333;
+        text-decoration: none;
+        transition: background-color 0.3s;
+
+        &:hover {
+          background-color: #f5f5f5;
+        }
+      }
+    }
+
+
+  }
+
+  .header-list {
+    ul {
+      list-style-type: none;
+      padding: 0;
+      display: flex;
+      align-items: center;
+
+      li {
+        margin-left: 20px;
+      }
+
+      a {
+        color: #000; // Flipkart's blue
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 1rem; // Adjust as needed
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
   }
 }

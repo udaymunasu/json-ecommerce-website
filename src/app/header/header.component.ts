@@ -14,6 +14,9 @@ export class HeaderComponent implements OnInit {
   userName:string="";
   searchResult:undefined|product[];
   cartItems=0;
+
+  showDropdown: boolean = false;
+
   constructor(private route: Router, private product:ProductService) {}
 
   ngOnInit(): void {
@@ -56,17 +59,23 @@ export class HeaderComponent implements OnInit {
     this.product.cartData.emit([])
   }
 
-  searchProduct(query:KeyboardEvent){
-    if(query){
-      const element = query.target as HTMLInputElement;
-      this.product.searchProduct(element.value).subscribe((result)=>{
-       
-        if(result.length>5){
-          result.length=length
-        }
-        this.searchResult=result;
-      })
-    }
+  toggleDropdown() {
+    this.showDropdown = !this.showDropdown;
+  }
+
+  searchProduct(event: any) {
+    const query = event.target.value;
+    console.log("query", query)
+    if (query) {
+      this.product.searchProduct(query).subscribe((result) => {
+        this.searchResult = result;
+        // this.showDropdown = true; // Show dropdown when there's a search result
+      });
+    } 
+    // else {
+    //   // this.searchResult = []; // Hide dropdown when no query
+    //   // this.showDropdown = false;
+    // }
   }
   hideSearch(){
     this.searchResult=undefined
