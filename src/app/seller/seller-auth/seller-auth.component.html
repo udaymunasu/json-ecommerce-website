@@ -1,0 +1,65 @@
+<div class="seller-auth">
+  <div *ngIf="!showLogin" class="sign-up">
+    <h1>Seller sign-up</h1>
+    <form class="common-form" (ngSubmit)="onSubmit()">
+      <ng-container *ngIf="step == 1">
+        <input type="text" class="form-input" placeholder="Enter FirstName" name="firstname"
+          [(ngModel)]="formData.firstname" />
+        <input type="text" class="form-input" placeholder="Enter Name" name="lastname"
+          [(ngModel)]="formData.lastname" />
+      </ng-container>
+
+      <ng-container *ngIf="step == 2">
+        <input type="email" class="form-input" placeholder="Enter Email" name="email" [(ngModel)]="formData.email" />
+        <input type="password" class="form-input" placeholder="Enter Password" name="password"
+          [(ngModel)]="formData.password" />
+      </ng-container>
+
+      <ng-container *ngIf="step == 3">
+        <h1>Gender</h1>
+        <input type="radio" name="gender" [(ngModel)]="formData.gender" value="male" />
+        Male<br />
+        <input type="radio" name="gender" [(ngModel)]="formData.gender" value="female" />
+        Female<br />
+        <input type="radio" name="gender" [(ngModel)]="formData.gender" value="other" />
+        Other<br />
+      </ng-container>
+
+      <div class="submit-buttons">
+        <button *ngIf="step > 1" (click)="prevStep()" class="form-button">
+          Previous
+        </button>
+        <button *ngIf="step < 3" (click)="nextStep()" class="form-button">
+          Next
+        </button>
+        <button type="submit" *ngIf="step === 3" class="form-button">
+          Submit
+        </button>
+      </div>
+      <a class="auth-toggle-link" (click)="openLogin()">Already have account? Click for Login</a>
+    </form>
+  </div>
+
+   <div *ngIf="showLogin" class="login">
+    <h1>Seller Login</h1>
+    <p class="error-p"></p>
+    <form class="common-form" (ngSubmit)="login()">
+      <input
+        type="text"
+        class="form-input"
+        placeholder="Enter Email"
+        name="email"
+        [(ngModel)]="sellerLogin.email"
+      />
+      <input
+        type="password"
+        class="form-input"
+        placeholder="Enter Password"
+        name="password"
+        [(ngModel)]="sellerLogin.password"
+      />
+      <button class="form-button">Login</button>
+      <a class="auth-toggle-link" (click)="openSignUp()">Don't have account? Click for sign-up</a>
+    </form>
+  </div> 
+</div>
