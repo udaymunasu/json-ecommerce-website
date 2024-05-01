@@ -24,6 +24,7 @@ import { CarouselComponent } from './carousel/carousel.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
 import { CartPageComponent } from './cart-page/cart-page.component';
 import { UserAuthComponent } from './user-auth/user-auth.component';
+import { CardCarouselComponent } from './card-carousel/card-carousel.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { UserAuthComponent } from './user-auth/user-auth.component';
     ProductDetailsComponent,
     CartPageComponent,
     UserAuthComponent,
+    CardCarouselComponent,
 
   ],
   imports: [

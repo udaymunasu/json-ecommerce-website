@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { product } from 'src/app/data-types';
 import { ProductService } from 'src/app/services/product.service';
 
@@ -8,22 +9,30 @@ import { ProductService } from 'src/app/services/product.service';
   styleUrls: ['./seller-add-product.component.scss'],
 })
 export class SellerAddProductComponent implements OnInit {
+  constructor(private product: ProductService, private fb: FormBuilder) {}
 
-
-  constructor(private product: ProductService) {}
-
+  addProductForm: FormGroup;
 
   addProductMessage: string | undefined;
 
-  // image upload: 
+  // image upload:
   imageUrl: string | ArrayBuffer | null = null;
   imageString: string | null = null;
 
+  categoryItems: string[] = [];
 
-  ngOnInit(): void {}
+  @ViewChild('fileInput') fileInput: ElementRef<HTMLInputElement>;
 
- 
-
+  ngOnInit(): void {
+    this.addProductForm = this.fb.group({
+      name: ['', Validators.required],
+      price: ['', Validators.required],
+      category: [''],
+      color: ['', Validators.required],
+      description: ['', Validators.required],
+      image: [''],
+    });
+  }
 
   onFileSelected(event: any) {
     const file: File = event.target.files[0];
@@ -31,34 +40,40 @@ export class SellerAddProductComponent implements OnInit {
 
     reader.onload = (e: any) => {
       this.imageUrl = e.target.result;
-      this.convertToBase64(file);
+      this.addProductForm.patchValue({
+        image: reader.result, // Convert image to base64 string
+      });
+      console.log('Selected Image:', reader.result);
     };
 
     reader.readAsDataURL(file);
   }
 
-  convertToBase64(file: File) {
-    const reader = new FileReader();
-    reader.onload = () => {
-      this.imageString = reader.result as string;
-    };
-    reader.onerror = (error) => {
-      console.error('Error: ', error);
-    };
-    reader.readAsDataURL(file);
-  }
-
-  submit(data: product) {
-    data.image = this.imageString;
-    this.product.addProduct(data).subscribe((result) => {
-      console.log("result", result);
-      if (result) {
-        this.addProductMessage = 'Product is added successfully';
-      }
-    });
+  submit() {
+    const formData = { ...this.addProductForm.value, category: this.categoryItems };
+    if (formData) {
+      this.product.addProduct(formData).subscribe((result) => {
+        console.log('result', result);
+        if (result) {
+          this.addProductMessage = 'Product is added successfully';
+          this.addProductForm.reset()
+        }
+      });
+    } else {
+      this.addProductMessage = 'Product Fill all values';
+    }
 
     setTimeout(() => {
       this.addProductMessage = undefined;
     }, 3000);
+  }
+
+  addCategory(event: Event) {
+    event.preventDefault(); // Prevent form submission
+    const newCategory = this.addProductForm.get('category')?.value.trim();
+    if (newCategory !== '') {
+      this.categoryItems.push(newCategory);
+      this.addProductForm.get('category')?.setValue(''); // Clear the input field
+    }
   }
 }

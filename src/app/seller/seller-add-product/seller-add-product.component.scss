@@ -1,6 +1,7 @@
 .input-flex {
     display: flex;
     gap: 8px;
+    justify-content: space-between;
 }
 
 .header-title {
@@ -12,7 +13,7 @@
 
 .upload-image-container {
     max-width: 400px;
-    margin: 0 auto;
+    margin:20px 0;
     text-align: center;
   
     .upload-area {

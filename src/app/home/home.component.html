@@ -1,8 +1,16 @@
 <div class="container">
+
+  
+  
   <div class="carousel-container">
     <app-carousel *ngIf="trendyProducts" [slides]="trendyProducts" [slideStep]="300" [interval]="5000">
     </app-carousel>
   </div>
+
+  
+  <h1>New Products</h1>
+
+  <app-card-carousel></app-card-carousel>
 
   <div class="product-list-wrapper">
     <h1>Popular Products</h1>
