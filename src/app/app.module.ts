@@ -25,6 +25,8 @@ import { ProductDetailsComponent } from './product-details/product-details.compo
 import { CartPageComponent } from './cart-page/cart-page.component';
 import { UserAuthComponent } from './user-auth/user-auth.component';
 import { CardCarouselComponent } from './card-carousel/card-carousel.component';
+import { CheckoutComponent } from './checkout/checkout.component';
+import { MyOrdersComponent } from './my-orders/my-orders.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +38,8 @@ import { CardCarouselComponent } from './card-carousel/card-carousel.component';
     CartPageComponent,
     UserAuthComponent,
     CardCarouselComponent,
+    CheckoutComponent,
+    MyOrdersComponent,
 
   ],
   imports: [

@@ -1,6 +1,24 @@
-import { trigger, transition, style, animate } from '@angular/animations';
+import {
+  trigger,
+  transition,
+  style,
+  animate,
+  animation,
+  useAnimation,
+} from '@angular/animations';
 import { Component, Input, OnInit } from '@angular/core';
 import { product } from '../data-types';
+
+export const fadeIn = animation([
+  style({ transform: 'translateX(-100%)' }), // start state
+  animate('300ms ease-in', style({ transform: 'translateX(0%)' })),
+]);
+
+export const fadeOut = animation([
+  style({ transform: 'translateX(0%)' }), // start state
+
+  animate('300ms ease-out', style({ transform: 'translateX(100%)' })),
+]);
 
 @Component({
   selector: 'app-carousel',
@@ -8,13 +26,8 @@ import { product } from '../data-types';
   styleUrls: ['./carousel.component.scss'],
   animations: [
     trigger('carouselAnimation', [
-      transition(':enter', [
-        style({ transform: 'translateX(-100%)' }),
-        animate('300ms ease-in', style({ transform: 'translateX(0%)' })),
-      ]),
-      transition(':leave', [
-        animate('300ms ease-out', style({ transform: 'translateX(100%)' })),
-      ]),
+      transition('void => *', [useAnimation(fadeIn)]),
+      transition('* => void', [useAnimation(fadeOut)]),
     ]),
   ],
 })
@@ -32,8 +45,7 @@ export class CarouselComponent implements OnInit {
     this.totalSlides = this.slides.length;
   }
 
-  ngOnDestroy(): void {
-  }
+  ngOnDestroy(): void {}
 
   currentSlide = 0;
 

@@ -1,0 +1,22 @@
+<div class="my-orders">
+  <h1>My Orders</h1>
+
+  <table>
+    <tr>
+      <th>Order Id</th>
+      <th>Price</th>
+      <th>Status</th>
+      <th>Cancel Order</th>
+    </tr>
+    <tr *ngFor="let order of orderData">
+      <td>#{{ order.id }}</td>
+      <td>{{ order.totalPrice }}</td>
+      <td>In Progress</td>
+      <td>
+        <button class="form-button" (click)="cancelOrder(order.id)">
+          Cancel Order
+        </button>
+      </td>
+    </tr>
+  </table>
+</div>

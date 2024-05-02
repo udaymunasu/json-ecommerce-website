@@ -11,7 +11,7 @@ export interface login {
 export interface product {
   name: string;
   price: number;
-  category: string;
+  category: string[] | [] | {};
   color: string;
   image: string | null;
   description: string;

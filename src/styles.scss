@@ -22,6 +22,12 @@ body {
   // font-family: 'Roboto', sans-serif;
 }
 
+ul{
+  li {
+    list-style: none;
+  }
+}
+
 .common-form {
   display: flex;
   flex-direction: column;

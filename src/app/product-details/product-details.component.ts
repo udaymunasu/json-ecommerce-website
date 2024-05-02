@@ -9,7 +9,7 @@ import { ProductService } from '../services/product.service';
   styleUrls: ['./product-details.component.scss'],
 })
 export class ProductDetailsComponent implements OnInit {
-  productData: undefined | product;
+  productData: undefined | product | any;
   productQuantity: number = 1;
   removeCart = false;
   cartData: product | undefined;
@@ -24,6 +24,7 @@ export class ProductDetailsComponent implements OnInit {
     productId &&
       this.product.getProduct(productId).subscribe((result) => {
         this.productData = result;
+        console.log("  this.productData ",   this.productData )
         let cartData = localStorage.getItem('localCart');
         if (productId && cartData) {
           let items = JSON.parse(cartData);

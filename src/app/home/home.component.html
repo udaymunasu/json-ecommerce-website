@@ -8,9 +8,9 @@
   </div>
 
   
-  <h1>New Products</h1>
+  <h1>All Products</h1>
 
-  <app-card-carousel></app-card-carousel>
+  <app-card-carousel *ngIf="allProducts"  [items]="allProducts"></app-card-carousel>
 
   <div class="product-list-wrapper">
     <h1>Popular Products</h1>
