@@ -22,7 +22,7 @@ body {
   // font-family: 'Roboto', sans-serif;
 }
 
-ul{
+ul {
   li {
     list-style: none;
   }
@@ -55,6 +55,7 @@ ul{
   color: darkgreen;
   cursor: pointer;
   border-radius: 4px;
+
   &:focus {
     outline-offset: 2px;
     outline: 2px solid darkgreen;
@@ -162,6 +163,7 @@ button:disabled {
   border-radius: 100%;
   margin-left: -4px;
   margin-top: -4px;
+
   &::after {
     content: "";
     display: block;
@@ -183,7 +185,33 @@ html,
 body {
   height: 100%;
 }
+
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+
+@mixin scrollbar-styles($thumb-color: #ccc, $track-color: #f4f4f4, $hover-color: #aaa) {
+
+  /* Scrollbar styles */
+  &::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $track-color;
+    border-radius: 8px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $thumb-color;
+    border-radius: 8px;
+    border: 2px solid $track-color;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: $hover-color;
+  }
 }

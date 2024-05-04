@@ -1,21 +1,27 @@
 <div class="carousel-container" #carouselContainer>
-  <div class="carousel" [style.transform]="'translateX(' + position + 'px)'">
-    <div class="carousel-item" *ngFor="let item of items">
-      <div class="card" [style.width.px]="itemWidth">
-        <img
-          src="{{ item.image }}"
-          alt="{{ item.name }}"
-          routerLink="/details/{{ item.id }}"
-        />
-        <div class="details">
-          <h3>{{ item.name }}</h3>
-          <p class="price">Price: {{ item.price }}</p>
+    <div class="carousel-wrapper">
+        <div class="carousel" [style.transform]="'translateX(' + position + 'px)'">
+            <div class="carousel-item" *ngFor="let item of items">
+                <div class="card">
+                    <img [src]="item.image" [alt]="item.name" routerLink="/details/{{ item.id }}" />
+                    <div class="details">
+                        <h3>{{ item.name }}</h3>
+                        <p class="price">Price: {{ item.price }}</p>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
-  <div class="button-container">
-    <button (click)="prev()" class="prev">&#10094;</button>
-    <button (click)="next()" class="next">&#10095;</button>
-  </div>
+    <div class="button-container">
+        <button (click)="prev()" class="prev">&#10094;</button>
+        <button (click)="next()" class="next">&#10095;</button>
+    </div>
+    <div class="dots-container" *ngIf="dotsBar">
+        <span class="dot" *ngFor="let item of items; let i = index" (click)="goToSlide(i)"
+            [class.active]="i === firstVisibleIndex"></span>
+    </div>
+    <!-- Dedicated space for custom scrollbar -->
+    <div class="custom-scrollbar" *ngIf="scrollBar">
+        <!-- This is where the custom scrollbar will be -->
+    </div>
 </div>

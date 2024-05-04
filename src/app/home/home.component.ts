@@ -9,6 +9,13 @@ import { ProductService } from '../services/product.service';
 })
 export class HomeComponent implements OnInit {
 
+  carouselConfig = {
+    itemWidth: 300, // Change the width of each carousel item
+    transitionDuration: 500, // Change transition duration
+    autoPlay: true, // Auto play carousel
+    autoPlayInterval: 3000 // Auto play interval in milliseconds
+  };
+
   slideWidth: number = 300;
 
   popularProducts:undefined|product[];

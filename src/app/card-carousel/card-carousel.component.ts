@@ -1,66 +1,143 @@
-import { Component, ElementRef, HostListener, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { CdkDragEnd } from '@angular/cdk/drag-drop';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  Input,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
+
 @Component({
   selector: 'app-card-carousel',
   templateUrl: './card-carousel.component.html',
   styleUrls: ['./card-carousel.component.scss'],
 })
-export class CardCarouselComponent implements OnInit, OnDestroy {
-  
+export class CardCarouselComponent implements OnInit, OnDestroy, AfterViewInit {
+  @Input() items: any[] = [];
+  @Input() itemWidth: number = 250; // Default item width
+  @Input() transitionDuration: number = 300; // Default transition duration
+  @Input() autoPlay: boolean = false; // Default auto play setting
+  @Input() scrollBar: boolean = true; // Default Scrollbar setting
+  @Input() dotsBar: boolean = true; // Default dotsBar setting
+  @Input() autoPlayInterval: number = 3000; // Default auto play interval
 
-  @Input() items: any;
+  swipeStartX: number;
+  swipeThreshold = 50; // Minimum distance to recognize a swipe (in pixels)
+  autoPlayIntervalId: any;
+  firstVisibleIndex = 0;
+  lastIndex = 0;
 
-  position: number = 0;
-  itemWidth: number = 220; // Adjust as needed (card width + margin)
-  lastIndex: number;
-
-  constructor(private elementRef: ElementRef) {}
-
-  @ViewChild('carousel', { static: true }) carousel: ElementRef;
+  @ViewChild('carouselContainer') carouselContainer: ElementRef<HTMLElement>;
+  position: number;
 
   ngOnInit(): void {
-    console.log(
-      "card carousel",this.items)
     this.calculateLastIndex();
+    if (this.autoPlay) {
+      this.startAutoPlay();
+    }
+
+    console.log(this.items.length);
+  }
+
+  ngAfterViewInit(): void {
     this.adjustItemWidth();
+    this.updateScrollbar();
   }
 
   ngOnDestroy(): void {
-    // Clean up any subscriptions, timers, etc. if needed
+    this.stopAutoPlay();
   }
 
   calculateLastIndex() {
-    this.lastIndex = Math.max(0, this.items.length - this.visibleItems());
+    if (this.carouselContainer?.nativeElement) {
+      const containerWidth = this.carouselContainer.nativeElement.clientWidth;
+      const itemsPerPage = Math.floor(containerWidth / this.itemWidth); // Include partially visible items
+      this.lastIndex = Math.max(0, this.items.length - itemsPerPage);
+    }
   }
 
   adjustItemWidth() {
-    const element = this.elementRef.nativeElement as HTMLElement;
-    const containerWidth = element.offsetWidth;
-    const itemsPerView = Math.floor(containerWidth / this.itemWidth);
-    this.itemWidth = containerWidth / itemsPerView;
+    const element = this.carouselContainer?.nativeElement;
+    if (element) {
+      const containerWidth = element.offsetWidth;
+      const itemsPerView = Math.floor(containerWidth / this.itemWidth);
+      this.itemWidth = containerWidth / itemsPerView;
+      this.calculateLastIndex();
+    }
   }
 
   visibleItems(): number {
-    const element = this.elementRef.nativeElement as HTMLElement;
-    const containerWidth = element.offsetWidth;
+    const element = this.carouselContainer?.nativeElement;
+    let containerWidth = 0; // Initialize with 0
+    if (element) {
+      containerWidth = element.offsetWidth;
+    }
     return Math.floor(containerWidth / this.itemWidth);
   }
 
-  next() {
-    if (this.position > -this.lastIndex * this.itemWidth) {
-      this.position -= this.itemWidth * this.visibleItems();
+  prev() {
+    if (this.firstVisibleIndex > 0) {
+      this.firstVisibleIndex--;
     } else {
-      this.position = 0;
+      this.firstVisibleIndex = this.lastIndex;
     }
+    this.position = -this.firstVisibleIndex * this.itemWidth;
+    this.updateScrollbar();
   }
 
-  prev() {
-    if (this.position < 0) {
-      this.position += this.itemWidth * this.visibleItems();
+  next() {
+    if (this.firstVisibleIndex < this.lastIndex) {
+      this.firstVisibleIndex++;
     } else {
-      this.position = -this.lastIndex * this.itemWidth;
+      this.firstVisibleIndex = 0;
     }
+    this.position = -this.firstVisibleIndex * this.itemWidth;
+    this.updateScrollbar();
+  }
+
+  goToSlide(index: number) {
+    if (index === this.lastIndex) {
+      this.firstVisibleIndex = Math.max(0, this.items.length - 3);
+      this.position = -this.firstVisibleIndex * this.itemWidth;
+    } else {
+      this.firstVisibleIndex = index;
+      this.position = -this.firstVisibleIndex * this.itemWidth;
+      if (this.position < -this.lastIndex * this.itemWidth) {
+        this.position = -this.lastIndex * this.itemWidth;
+      }
+    }
+    this.updateScrollbar();
+  }
+
+  updateScrollbar() {
+    if (this.carouselContainer) {
+        const visibleItemsCount = this.visibleItems();
+        const totalItems = this.items.length;
+        const containerWidth = this.carouselContainer.nativeElement.offsetWidth;
+        const thumbWidth = Math.min((visibleItemsCount / totalItems) * 100, (containerWidth / totalItems) * 100);
+        const thumbPosition = (this.firstVisibleIndex / (totalItems - visibleItemsCount)) * (100 - thumbWidth);
+        
+        this.carouselContainer.nativeElement.style.setProperty(
+            '--thumb-position',
+            `${thumbPosition}%`
+        );
+
+        this.carouselContainer.nativeElement.style.setProperty(
+            '--thumb-width',
+            `${thumbWidth}%`
+        );
+    }
+}
+  
+
+  startAutoPlay() {
+    this.autoPlayIntervalId = setInterval(() => {
+      this.next();
+    }, this.autoPlayInterval);
+  }
+
+  stopAutoPlay() {
+    clearInterval(this.autoPlayIntervalId);
   }
 }
-
-  
