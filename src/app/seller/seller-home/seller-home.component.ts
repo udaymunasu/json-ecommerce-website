@@ -16,11 +16,21 @@ export class SellerHomeComponent implements OnInit {
   icon = faTrash;
   iconEdit=faEdit;
 
+  toggleProductCateory: boolean;
   noOfProducts: any;
+
+  categoryList: any;
+  noOfcategories: any
+
   constructor(private product: ProductService) {}
 
   ngOnInit(): void {
     this.list();
+    this.getCategoryList();
+  }
+
+  toggleCategory() {
+    this.toggleProductCateory = !this.toggleProductCateory
   }
 
   deleteProduct(id: number) {
@@ -42,6 +52,29 @@ export class SellerHomeComponent implements OnInit {
         this.productList = result;
         this.noOfProducts = this.productList.length;
         console.log(" this.productList",  this.productList)
+      }
+    });
+  }
+
+  deleteCategory(id: number) {
+    this.product.deleteCategory(id).subscribe((result) => {
+      if (result) {
+        this.productMessage = 'Product is deleted';
+
+        this.list();
+      }
+    });
+    setTimeout(() => {
+      this.productMessage = undefined;
+    }, 3000);
+  }
+
+  getCategoryList() {
+    this.product.getCategoryList().subscribe((result) => {
+      if (result) {
+        this.categoryList = result;
+        this.noOfProducts = this.categoryList.length;
+        console.log(" this.categoryList",  this.categoryList)
       }
     });
   }

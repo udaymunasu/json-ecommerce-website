@@ -1,7 +1,9 @@
 <div class="product-list">
   <h1>Product List ({{noOfProducts}})</h1>
+  <button (click)="toggleCategory()">{{toggleProductCateory ? "Show Categories" : "Show Products"}}</button>
+
   <p class="message-p">{{ productMessage }}</p>
-  <table>
+  <table *ngIf="toggleProductCateory">
     <thead>
       <tr>
         <th>Image</th>
@@ -24,6 +26,29 @@
         <td>
           <div class="action-buttons">
             <button (click)="deleteProduct(item.id)">Delete</button>
+            <button class="adjust-update-link" [routerLink]="['/seller-update-product', item.id]"> Update</button>
+          </div>
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <table *ngIf="!toggleProductCateory">
+    <thead>
+      <tr>
+        <th>Image</th>
+        <th>Name</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of categoryList">
+        <td><img src="{{ item.image }}" /></td>
+        <td>{{ item.name }}</td>
+        <td>
+          <div class="action-buttons">
+            <button (click)="deleteCategory(item.id)">Delete</button>
             <button class="adjust-update-link" [routerLink]="['/seller-update-product', item.id]"> Update</button>
           </div>
 

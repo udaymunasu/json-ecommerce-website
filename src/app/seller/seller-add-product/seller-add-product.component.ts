@@ -12,6 +12,7 @@ export class SellerAddProductComponent implements OnInit {
   constructor(private product: ProductService, private fb: FormBuilder) {}
 
   addProductForm: FormGroup;
+  addCategoryForm: FormGroup;
 
   addProductMessage: string | undefined;
 
@@ -20,6 +21,7 @@ export class SellerAddProductComponent implements OnInit {
   imageString: string | null = null;
 
   categoryItems: string[] = [];
+  toggleProductCateory: boolean;
 
   @ViewChild('fileInput') fileInput: ElementRef<HTMLInputElement>;
 
@@ -32,6 +34,34 @@ export class SellerAddProductComponent implements OnInit {
       description: ['', Validators.required],
       image: [''],
     });
+
+    this.addCategoryForm = this.fb.group({
+      name: [''],
+      image: [''],
+    });
+  }
+
+  toggleCategory() {
+    this.toggleProductCateory = !this.toggleProductCateory;
+  }
+
+  createCategory() {
+    console.log('category added', this.addCategoryForm.value);
+    const formData = {
+      ...this.addCategoryForm.value,
+      category: this.categoryItems,
+    };
+    if (formData) {
+      this.product.addCategory(formData).subscribe((result) => {
+        console.log('result', result);
+        if (result) {
+          this.addProductMessage = 'Product is added successfully';
+          this.addProductForm.reset();
+        }
+      });
+    } else {
+      this.addProductMessage = 'Product Fill all values';
+    }
   }
 
   onFileSelected(event: any) {
@@ -50,13 +80,16 @@ export class SellerAddProductComponent implements OnInit {
   }
 
   submit() {
-    const formData = { ...this.addProductForm.value, category: this.categoryItems };
+    const formData = {
+      ...this.addProductForm.value,
+      category: this.categoryItems,
+    };
     if (formData) {
       this.product.addProduct(formData).subscribe((result) => {
         console.log('result', result);
         if (result) {
           this.addProductMessage = 'Product is added successfully';
-          this.addProductForm.reset()
+          this.addProductForm.reset();
         }
       });
     } else {
