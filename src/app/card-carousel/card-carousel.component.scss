@@ -17,6 +17,10 @@
         padding: 10px 0;
         @include scrollbar;
 
+        &.hide-overflow {
+            overflow: hidden;
+        }
+
         .carousel {
             display: flex;
             gap:12px;
