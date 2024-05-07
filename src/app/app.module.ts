@@ -27,6 +27,8 @@ import { UserAuthComponent } from './user-auth/user-auth.component';
 import { CardCarouselComponent } from './card-carousel/card-carousel.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { MyOrdersComponent } from './my-orders/my-orders.component';
+import { TooltipDirective } from './tooltip/tooltip.directive';
+import { TooltipComponent } from './tooltip/tooltip.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +42,8 @@ import { MyOrdersComponent } from './my-orders/my-orders.component';
     CardCarouselComponent,
     CheckoutComponent,
     MyOrdersComponent,
+    TooltipDirective,
+    TooltipComponent,
 
   ],
   imports: [
