@@ -24,6 +24,13 @@ export class ProductService {
     return this.http.delete(`http://localhost:3000/productCategory/${id}`);
   }
 
+  updateCategory(category: any) {
+    return this.http.put<any>(
+      `http://localhost:3000/productCategory/${category.id}`,
+      category
+    );
+  }
+
 
   productList() {
     return this.http.get<product[]>('http://localhost:3000/products');
