@@ -1,23 +1,28 @@
-<div class="row product-details" *ngIf="productData">
-  <div class="col-sm-6">
+<div class="product-details" *ngIf="productData">
+  <div class="product-image-column">
     <img class="product-img" src="{{ productData.image }}" alt="" />
   </div>
-  <div class="product-column">
+  <div class="product-details-column">
     <div class="details">
       <h1>{{ productData.name }}</h1>
       <h3>Price : {{ productData.price }}</h3>
-      <div>
+      <div class="product-color">
         Color :
-        <h3
-          [style.backgroundColor]="productData.color"
-          class="product-color"
-        ></h3>
+        <input type="color" [value]="productData.color" />
       </div>
-      <h6>Category : 
+      <div class="product-category">
+        <h3>Category :</h3>
         <ul>
-          <li *ngFor="let item of productData.category.name"> {{item }}</li>
+          <ng-container *ngIf="productData.category; else newDeb">
+            {{ productData.category }}
+          </ng-container>
+          <ng-template #newDeb>
+            <li *ngFor="let item of productData.category.name">
+              {{ item }}
+            </li>
+          </ng-template>
         </ul>
-      </h6>
+      </div>
       <h6>Description : {{ productData.description }}</h6>
       <div class="product-detail-buttons">
         <!-- <button class="form-button">Buy Now</button> -->
@@ -39,4 +44,10 @@
       </div>
     </div>
   </div>
+
 </div>
+
+<h1> Create a related products row </h1>
+
+
+

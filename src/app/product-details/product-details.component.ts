@@ -13,6 +13,9 @@ export class ProductDetailsComponent implements OnInit {
   productQuantity: number = 1;
   removeCart = false;
   cartData: product | undefined;
+  relatedProducts: any;
+
+  allProducts: any;
   constructor(
     private activeRoute: ActivatedRoute,
     private product: ProductService
@@ -24,7 +27,7 @@ export class ProductDetailsComponent implements OnInit {
     productId &&
       this.product.getProduct(productId).subscribe((result) => {
         this.productData = result;
-        console.log("  this.productData ",   this.productData )
+        console.log('  this.productData ', this.productData);
         let cartData = localStorage.getItem('localCart');
         if (productId && cartData) {
           let items = JSON.parse(cartData);
@@ -55,7 +58,36 @@ export class ProductDetailsComponent implements OnInit {
           });
         }
       });
+
+    this.getAllproducts();
   }
+
+  getAllproducts() {
+    this.product.productList().subscribe((data) => {
+      this.allProducts = data;
+      this.relatedProducts = this.allProducts.forEach((data: any) => {
+        // data.category = this.productData.category
+        // console.log("data.category", typeof data.category)
+
+        if (typeof data.category === 'object') {
+          // data.catgeory.hasValues(this.productData.category);
+          Object.values(data.category).includes(this.productData.category);
+        } else {
+          data.category = this.productData.category;
+        }
+      });
+      // this.allProducts.filter((data: any) => {
+      //   if (Array(data.category)) {
+      //     data.category = this.productData.category;
+      //   }
+      // });
+    });
+
+    console.log(' this.relatedProducts', this.relatedProducts);
+  }
+
+  // this.relatedProducts =  this.productData.filter(data => data.category === )
+
   handleQuantity(val: string) {
     if (this.productQuantity < 20 && val === 'plus') {
       this.productQuantity += 1;
@@ -103,4 +135,6 @@ export class ProductDetailsComponent implements OnInit {
     }
     this.removeCart = false;
   }
+
+  getRelatedProducts() {}
 }
