@@ -53,7 +53,7 @@ export class CardCarouselComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.carouselContainer?.nativeElement) {
       const containerWidth = this.carouselContainer.nativeElement.clientWidth;
       const itemsPerPage = Math.floor(containerWidth / this.itemWidth); // Include partially visible items
-      this.lastIndex = Math.max(0, this.items.length - itemsPerPage);
+      this.lastIndex = Math.max(0, this.items.length - itemsPerPage - 5);
     }
   }
 
@@ -98,7 +98,7 @@ export class CardCarouselComponent implements OnInit, OnDestroy, AfterViewInit {
 
   goToSlide(index: number) {
     if (index === this.lastIndex) {
-      this.firstVisibleIndex = Math.max(0, this.items.length - 3);
+      this.firstVisibleIndex = Math.max(0, this.items.length - 10);
       this.position = -this.firstVisibleIndex * this.itemWidth;
     } else {
       this.firstVisibleIndex = index;

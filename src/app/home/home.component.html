@@ -19,7 +19,11 @@
         <div class="product-item">
           <img src="{{ item.image }}" alt="" />
           <div class="product-details">
+<<<<<<< HEAD
             <h6 class="name-head" title="{{item.name}}">{{ item.name }}</h6>
+=======
+            <h6 class="name-head" [appTooltip]="item.name" tooltipPosition="left">{{ item.name }}</h6>
+>>>>>>> cf84144139740031f0afd04715ec99f28a649d19
             <div class="product-price">
               <h6>Price:{{ item.price }}</h6>
             </div>
@@ -28,8 +32,8 @@
             </div>
           </div>
           <div class="product-footer">
-            <a routerLink="/details/{{ item.id }}">View Details</a>
-            <a href="">Add to Cart</a>
+            <a          class="product-detail-link" routerLink="/details/{{ item.id }}">View Details</a>
+            <a href=""  class="add-cart-link">Add to Cart</a>
           </div>
         </div>
       </div>
@@ -40,7 +44,11 @@
         <div class="product-item">
           <img src="{{ item.image }}" alt="" />
           <div class="product-details">
+<<<<<<< HEAD
             <h6 class="name-head" title="{{item.name}}">{{ item.name }}</h6>
+=======
+            <h6 class="name-head" position="top" [appTooltip]="item.name">{{ item.name }}</h6>
+>>>>>>> cf84144139740031f0afd04715ec99f28a649d19
             <div class="product-price">
               <h6>Price:{{ item.price }}</h6>
             </div>
@@ -49,8 +57,13 @@
             </div>
           </div>
           <div class="product-footer">
+<<<<<<< HEAD
             <a routerLink="/details/{{ item.id }}" >View Details</a>
             <a href="">Add to Cart</a>
+=======
+            <a          class="product-detail-link" routerLink="/details/{{ item.id }}">View Details</a>
+            <a href=""  class="add-cart-link">Add to Cart</a>
+>>>>>>> cf84144139740031f0afd04715ec99f28a649d19
           </div>
         </div>
       </div>
@@ -62,7 +75,11 @@
         <div class="product-item">
           <img src="{{ item.image }}" alt="" />
           <div class="product-details">
+<<<<<<< HEAD
             <h6 class="name-head" title="{{item.name}}">{{ item.name }}</h6>
+=======
+            <h6 class="name-head" [appTooltip]="item.name" position="top">{{ item.name }}</h6>
+>>>>>>> cf84144139740031f0afd04715ec99f28a649d19
             <div class="product-price">
               <h6>Price:{{ item.price }}</h6>
             </div>
@@ -71,8 +88,8 @@
             </div>
           </div>
           <div class="product-footer">
-            <a routerLink="/details/{{ item.id }}">View Details</a>
-            <a href="">Add to Cart</a>
+            <a          class="product-detail-link" routerLink="/details/{{ item.id }}">View Details</a>
+            <a href=""  class="add-cart-link">Add to Cart</a>
           </div>
         </div>
       </div>
