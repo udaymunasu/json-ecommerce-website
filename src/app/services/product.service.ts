@@ -6,7 +6,7 @@ import { product, cart, order } from '../data-types';
   providedIn: 'root',
 })
 export class ProductService {
-  cartData = new EventEmitter<product[] | []>();
+  cartData = new EventEmitter<product[] | [] | any>();
   constructor(private http: HttpClient) {}
 
   addProduct(data: product) {
@@ -16,7 +16,7 @@ export class ProductService {
   addCategory(data: product) {
     return this.http.post('http://localhost:3000/productCategory', data);
   }
-  
+
   getCategoryList() {
     return this.http.get<any[]>('http://localhost:3000/productCategory');
   }
@@ -44,8 +44,9 @@ export class ProductService {
     return this.http.get<product>(`http://localhost:3000/products/${id}`);
   }
 
-  updateProduct(product: product) {
-    return this.http.put<product>(
+  updateProduct(product: any) {
+    console.log("product service", product)
+    return this.http.put<any>(
       `http://localhost:3000/products/${product.id}`,
       product
     );
@@ -65,17 +66,19 @@ export class ProductService {
     );
   }
 
-  localAddToCart(data: product) {
-    let cartData = [];
-    let localCart = localStorage.getItem('localCart');
-    if (!localCart) {
-      localStorage.setItem('localCart', JSON.stringify([data]));
-      this.cartData.emit([data]);
-    } else {
-      cartData = JSON.parse(localCart);
-      cartData.push(data);
-      localStorage.setItem('localCart', JSON.stringify(cartData));
-      this.cartData.emit(cartData);
+  localAddToCart(data: any) {
+    if (data) {
+      let cartData: any[] =[] ;
+      let localCart = localStorage.getItem('localCart');
+      if (!localCart) {
+        localStorage.setItem('localCart', JSON.stringify([data]));
+        this.cartData.emit([data]);
+      } else {
+        cartData = JSON.parse(localCart);
+        cartData.push(data);
+        localStorage.setItem('localCart', JSON.stringify(cartData));
+        this.cartData.emit(cartData);
+      }
     }
   }
 

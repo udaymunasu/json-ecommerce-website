@@ -1,21 +1,45 @@
 <div class="update-product">
     <h1>Update Product</h1>
     <p class="message-p">{{productMessage}}</p>
-    <form #addProduct="ngForm" (ngSubmit)="submit(addProduct.value)" class="common-form">
-        <input type="text" class="form-input" placeholder="Enter Product Name" name="name"
-            ngModel="{{productData?.name}}" />
-        <input type="text" class="form-input" placeholder="Enter Product Price" name="price"
-            ngModel="{{productData?.price}}" />
-        <input type="text" class="form-input" placeholder="Enter Product Category" name="category"
-            ngModel="{{productData?.category}}" />
-        <input type="text" class="form-input" placeholder="Enter Product Color" name="color"
-            ngModel="{{productData?.color}}" />
-        <textarea type="text" class="form-input" placeholder="Enter Product Description" name="description"
-            ngModel="{{productData?.description}}"></textarea>
+    <form [formGroup]="productForm" class="common-form"> {{productData?.name}}
+        <input type="text" class="form-input" placeholder="Enter Product Name" formControlName="name"
+            [value]="productData?.name" />
+        <input type="text" class="form-input" placeholder="Enter Product Price" formControlName="price"
+            [value]="productData?.price" />
 
-        <input type="text" class="form-input" placeholder="Enter Product Image URL" name="image"
-            ngModel="{{productData?.image}}" />
-        <button class="form-button">Update Product</button>
+        <div class="input-flex ">
+            <div>
+                <input type="text" class="form-input" placeholder="Enter category" formControlName="category"
+                    (keydown.enter)="addCategory($event)">
+                <ul>
+                    <li *ngFor="let category of categoryItems">{{ category }}</li>
+                </ul>
+            </div>
 
+        </div>
+
+
+        <input type="text" class="form-input" placeholder="Enter Product Color" formControlName="color"
+            [value]="productData?.color" />
+        <textarea type="text" class="form-input" placeholder="Enter Product Description" formControlName="description"
+            [value]="productData?.price"></textarea>
+        <input type="text" class="form-input" placeholder="Enter Product Brand" formControlName="brand" />
+        <input type="text" class="form-input" placeholder="Enter Product Material" formControlName="material" />
+
+        <input type="hidden" formControlName="image">
+        <div class="upload-image-container">
+            <div class="upload-area" (click)="fileInput.click()">
+                <input type="file" #fileInput style="display: none" (change)="onFileSelected($event)">
+                <p>Click here or drag and drop an image to upload</p>
+            </div>
+
+            <div class="preview" *ngIf="imageUrl">
+                <img [src]="imageUrl" alt="Uploaded Image">
+            </div>
+            <div class="preview" *ngIf="productData?.name">
+                <img [src]="productData?.image" alt="Uploaded Image">
+            </div>
+        </div>
+        <button class="form-button" (click)="submit()">Update Product</button>
     </form>
 </div>
