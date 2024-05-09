@@ -16,11 +16,11 @@ export class SellerHomeComponent implements OnInit {
   icon = faTrash;
   iconEdit=faEdit;
 
-  toggleProductCateory: boolean;
+  toggleProductCateory: boolean = true;
   noOfProducts: any;
 
   categoryList: any;
-  noOfcategories: any
+  noOfcategories: any;
 
   constructor(private product: ProductService) {}
 
