@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ConnectableObservable } from 'rxjs';
 import { product, cart } from '../data-types';
 import { ProductService } from '../services/product.service';
 
@@ -19,7 +20,7 @@ export class ProductDetailsComponent implements OnInit {
   constructor(
     private activeRoute: ActivatedRoute,
     private product: ProductService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     let productId = this.activeRoute.snapshot.paramMap.get('productId');
@@ -65,17 +66,27 @@ export class ProductDetailsComponent implements OnInit {
   getAllproducts() {
     this.product.productList().subscribe((data) => {
       this.allProducts = data;
-      this.relatedProducts = this.allProducts.map((data: any) => {
-        // console.log("data.category", data.category, this.productData.category)
-        if (typeof data.category === 'object') {
-          Object.values(data.category.name).includes(this.productData.category);
-        }
-        if (Array.isArray(data.category)) {
-          data.category.includes(this.productData.category);
-        } else if (typeof data.category === 'string') {
-          data.category = this.productData.category;
-        }
-      });
+      const filterWithThese = this.productData.category;
+      this.relatedProducts = filterWithThese.forEach(
+        (data) =>
+        console.log(
+          (this.allProducts.filter((data: any) => {
+            const prodCat = Array.isArray(data.category)
+              ? data.category
+              : data.category
+                .split(',')
+                .map((category: any) => category.trim());
+  
+            prodCat.includes(data);
+          }))
+        )
+      );
+
+      // const filterFrom = Array.isArray(this.productData.category) ?  Array.isArray(this.productData.category).forEach(data => console.log("data......", data))
+      // prodCat.some(data =>  data)
+      // console.log('prodCat  ,data.category', );
+
+      //  console.log(" prodCat.includes(this.productData.category.forEach(data => data))",  prodCat.includes())
     });
 
     console.log(' this.relatedProducts', this.relatedProducts);
@@ -129,5 +140,5 @@ export class ProductDetailsComponent implements OnInit {
     this.removeCart = false;
   }
 
-  getRelatedProducts() {}
+  getRelatedProducts() { }
 }

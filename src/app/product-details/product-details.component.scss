@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: row;
   margin: 40px 60px;
+  gap: 100px;
 
   .product-image-column {
     width: 50%;
@@ -16,7 +17,7 @@
   }
 
   .product-color {
-    display:flex;
+    display: flex;
     flex-direction: column;
 
     input {
@@ -28,7 +29,7 @@
       -webkit-appearance: none;
       -moz-appearance: none;
       appearance: none;
-      background-color: transparent;
+      // background-color: var(--product-data-color);
       cursor: pointer;
 
       &::-webkit-color-swatch {
@@ -42,8 +43,14 @@
     }
   }
 
+  .product-description {
+    display: flex;
+    align-items: center;
+    gap:12px;
+  }
+
   .product-category {
-    display:flex;
+    display: flex;
     align-items: center;
     h3 {
       margin: 0;
