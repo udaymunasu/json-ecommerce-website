@@ -20,7 +20,7 @@ export class ProductDetailsComponent implements OnInit {
   constructor(
     private activeRoute: ActivatedRoute,
     private product: ProductService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     let productId = this.activeRoute.snapshot.paramMap.get('productId');
@@ -67,20 +67,16 @@ export class ProductDetailsComponent implements OnInit {
     this.product.productList().subscribe((data) => {
       this.allProducts = data;
       const filterWithThese = this.productData.category;
-      this.relatedProducts = filterWithThese.forEach(
-        (data) =>
-        console.log(
-          (this.allProducts.filter((data: any) => {
-            const prodCat = Array.isArray(data.category)
-              ? data.category
-              : data.category
-                .split(',')
-                .map((category: any) => category.trim());
-  
-            prodCat.includes(data);
-          }))
-        )
-      );
+      const relatedProducts = this.allProducts.filter((product: any) => {
+        const prodCategories = Array.isArray(product.category)
+          ? product.category : [product.category]
+          return prodCategories.some(category => filterWithThese.includes(category))
+
+      });
+      console.log(' this.relatedProducts  ////////', relatedProducts);
+      this.relatedProducts = relatedProducts
+
+      // product.category.split(',').map((category: any) => category.trim());
 
       // const filterFrom = Array.isArray(this.productData.category) ?  Array.isArray(this.productData.category).forEach(data => console.log("data......", data))
       // prodCat.some(data =>  data)
@@ -88,7 +84,7 @@ export class ProductDetailsComponent implements OnInit {
 
       //  console.log(" prodCat.includes(this.productData.category.forEach(data => data))",  prodCat.includes())
     });
-
+// 
     console.log(' this.relatedProducts', this.relatedProducts);
   }
 
@@ -140,5 +136,5 @@ export class ProductDetailsComponent implements OnInit {
     this.removeCart = false;
   }
 
-  getRelatedProducts() { }
+  getRelatedProducts() {}
 }

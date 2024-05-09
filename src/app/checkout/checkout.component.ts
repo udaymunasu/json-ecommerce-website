@@ -57,8 +57,13 @@ export class CheckoutComponent implements OnInit {
             this.orderMsg = undefined;
             this.router.navigate(['/my-orders']);
           }, 4000);
+
+
         }
       });
     }
   }
 }
+
+
+// update the noOfOrders to that products when order placed

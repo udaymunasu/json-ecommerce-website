@@ -37,7 +37,7 @@ export class CardCarouselComponent implements OnInit, OnDestroy, AfterViewInit {
       this.startAutoPlay();
     }
 
-    console.log(this.items.length);
+    console.log("this.items", this.items);
   }
 
   ngAfterViewInit(): void {

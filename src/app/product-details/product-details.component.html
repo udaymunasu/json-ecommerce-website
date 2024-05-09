@@ -7,12 +7,19 @@
       <h1>{{ productData.name }}</h1>
       <h3>Price : {{ productData.price }}</h3>
       <div class="product-color">
-        Color : {{productData.color}}
+        Color : {{ productData.color }}
         <input type="color" [value]="productData.color" />
-        <div [ngStyle]="{'background-color': productData.color , 'border-radius': '50%', 'width': '40px', 'height': '40px' }"></div>
+        <div
+          [ngStyle]="{
+            'background-color': productData.color,
+            'border-radius': '50%',
+            width: '40px',
+            height: '40px'
+          }"
+        ></div>
       </div>
       <div class="product-category">
-        <h3>Category </h3>
+        <h3>Category</h3>
         <ul>
           <ng-container *ngIf="productData.category; else newDeb">
             {{ productData.category }}
@@ -25,7 +32,7 @@
         </ul>
       </div>
       <div class="product-description">
-        <h1>Description </h1>
+        <h1>Description</h1>
         <h3>{{ productData.description }}</h3>
       </div>
 
@@ -51,4 +58,8 @@
   </div>
 </div>
 
-<h1>Create a related products row</h1>
+<h1>related products row</h1>
+
+<div class="related-container">
+  <app-card-carousel [items]="relatedProducts"></app-card-carousel>
+</div>
