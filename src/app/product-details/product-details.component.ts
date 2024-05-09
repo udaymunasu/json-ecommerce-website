@@ -65,28 +65,21 @@ export class ProductDetailsComponent implements OnInit {
   getAllproducts() {
     this.product.productList().subscribe((data) => {
       this.allProducts = data;
-      this.relatedProducts = this.allProducts.forEach((data: any) => {
-        // data.category = this.productData.category
-        // console.log("data.category", typeof data.category)
-
+      this.relatedProducts = this.allProducts.map((data: any) => {
+        // console.log("data.category", data.category, this.productData.category)
         if (typeof data.category === 'object') {
-          // data.catgeory.hasValues(this.productData.category);
-          Object.values(data.category).includes(this.productData.category);
-        } else {
+          Object.values(data.category.name).includes(this.productData.category);
+        }
+        if (Array.isArray(data.category)) {
+          data.category.includes(this.productData.category);
+        } else if (typeof data.category === 'string') {
           data.category = this.productData.category;
         }
       });
-      // this.allProducts.filter((data: any) => {
-      //   if (Array(data.category)) {
-      //     data.category = this.productData.category;
-      //   }
-      // });
     });
 
     console.log(' this.relatedProducts', this.relatedProducts);
   }
-
-  // this.relatedProducts =  this.productData.filter(data => data.category === )
 
   handleQuantity(val: string) {
     if (this.productQuantity < 20 && val === 'plus') {
