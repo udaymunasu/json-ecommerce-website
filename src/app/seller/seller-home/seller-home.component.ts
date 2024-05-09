@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { faEdit } from '@fortawesome/free-regular-svg-icons';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
+
 import { product } from 'src/app/data-types';
 import { ProductService } from 'src/app/services/product.service';
 
@@ -13,8 +12,7 @@ export class SellerHomeComponent implements OnInit {
 
   productList: undefined | product[];
   productMessage: undefined | string;
-  icon = faTrash;
-  iconEdit=faEdit;
+
 
   toggleProductCateory: boolean = true;
   noOfProducts: any;

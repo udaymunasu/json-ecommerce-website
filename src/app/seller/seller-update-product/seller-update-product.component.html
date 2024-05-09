@@ -10,6 +10,7 @@
         <div class="input-flex ">
             <div>
                 <input type="text" class="form-input" placeholder="Enter category" formControlName="category"
+                [value]="productData?.category"
                     (keydown.enter)="addCategory($event)">
                 <ul>
                     <li *ngFor="let category of categoryItems">{{ category }}</li>
