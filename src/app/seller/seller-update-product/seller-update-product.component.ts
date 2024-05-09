@@ -101,20 +101,55 @@ export class SellerUpdateProductComponent implements OnInit {
   onFileSelected(event: any) {
     const file: File = event.target.files[0];
     const reader = new FileReader();
-
+  
     reader.onload = (e: any) => {
-      this.imageUrl = e.target.result;
-      // Patch the form only after the image is loaded
-      reader.onloadend = () => {
+      const img = new Image();
+      img.src = e.target.result;
+  
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+  
+        // Set canvas dimensions to the scaled size
+        const maxWidth = 800; // Adjust this according to your requirement
+        const maxHeight = 600; // Adjust this according to your requirement
+        let width = img.width;
+        let height = img.height;
+  
+        if (width > height) {
+          if (width > maxWidth) {
+            height *= maxWidth / width;
+            width = maxWidth;
+          }
+        } else {
+          if (height > maxHeight) {
+            width *= maxHeight / height;
+            height = maxHeight;
+          }
+        }
+  
+        canvas.width = width;
+        canvas.height = height;
+  
+        // Draw image on canvas
+        ctx?.drawImage(img, 0, 0, width, height);
+  
+        // Convert canvas to base64 string
+        const compressedBase64 = canvas.toDataURL('image/jpeg', 0.7); // Adjust quality as needed
+  
+        this.imageString = compressedBase64;
+        // Update form value
         this.productForm.patchValue({
-          image: reader.result, // Convert image to base64 string
+          image: compressedBase64, // Convert image to base64 string
         });
+  
+        console.log('this.imageString ', this.imageString );
       };
-      console.log('Selected Image:', reader.result);
     };
-
+  
     reader.readAsDataURL(file);
   }
+  
 
   get categoryControls() {
     return this.productForm.get('category') as FormArray;

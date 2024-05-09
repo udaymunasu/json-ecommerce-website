@@ -10,7 +10,7 @@ import { ProductService } from '../services/product.service';
 })
 export class CheckoutComponent implements OnInit {
   totalPrice: number;
-  cartData: cart[] | undefined;
+  cartData: cart[] | undefined | any;
   orderMsg: string | undefined;
   constructor(private product: ProductService, private router: Router) {}
 
@@ -34,35 +34,46 @@ export class CheckoutComponent implements OnInit {
   }
 
   orderNow(data: { email: string; address: string; contact: string }) {
-    let user = localStorage.getItem('user');
-    let userId = user && JSON.parse(user).id;
-    if (this.totalPrice) {
-      let orderData: order = {
-        ...data,
-        totalPrice: this.totalPrice,
-        userId,
-        id: undefined,
-      };
-
-      this.cartData?.forEach((item) => {
-        setTimeout(() => {
-          item.id && this.product.deleteCartItems(item.id);
-        }, 700);
-      });
-
-      this.product.orderNow(orderData).subscribe((result) => {
-        if (result) {
-          this.orderMsg = 'Order has been placed';
-          setTimeout(() => {
-            this.orderMsg = undefined;
-            this.router.navigate(['/my-orders']);
-          }, 4000);
-
-
-        }
-      });
+    const user = localStorage.getItem('user');
+    const userId = user ? JSON.parse(user).id : null;
+    
+    if (!userId || !this.totalPrice || !this.cartData || this.cartData.length === 0) {
+      return; // Exit if userId is null, totalPrice is missing, or cartData is empty
     }
+  
+    const orderData: order = {
+      ...data,
+      totalPrice: this.totalPrice,
+      userId,
+      id: undefined,
+    };
+  
+    // Place order
+    this.product.orderNow(orderData).subscribe((result) => {
+      if (result) {
+        this.orderMsg = 'Order has been placed';
+        setTimeout(() => {
+          this.orderMsg = undefined;
+          this.router.navigate(['/my-orders']);
+        }, 4000);
+  
+        // Update product data
+        this.cartData.forEach((item) => {
+          if (item.productId) {
+            this.product.getProduct(item.productId).subscribe((product: any) => {
+              if (product) {
+                product.noOfTimesOrdered = (product.noOfTimesOrdered || 0) + 1;
+                this.product.updateProduct(product).subscribe(() => {
+                  console.log(`Product ${product.id} updated with noOfTimesOrdered`);
+                });
+              }
+            });
+          }
+        });
+      }
+    });
   }
+  
 }
 
 

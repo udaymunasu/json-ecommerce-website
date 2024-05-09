@@ -36,8 +36,8 @@
             <div class="preview" *ngIf="imageUrl">
                 <img [src]="imageUrl" alt="Uploaded Image">
             </div>
-            <div class="preview" *ngIf="productData?.name">
-                <img [src]="productData?.image" alt="Uploaded Image">
+            <div class="preview" *ngIf="imageString">
+                <img [src]="imageString" alt="Uploaded Image">
             </div>
         </div>
         <button class="form-button" (click)="submit()">Update Product</button>

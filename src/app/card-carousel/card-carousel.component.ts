@@ -14,7 +14,7 @@ import {
   styleUrls: ['./card-carousel.component.scss'],
 })
 export class CardCarouselComponent implements OnInit, OnDestroy, AfterViewInit {
-  @Input() items: any[] = [];
+  @Input() items: any;
   @Input() itemWidth: number = 250; // Default item width
   @Input() transitionDuration: number = 300; // Default transition duration
   @Input() autoPlay: boolean = false; // Default auto play setting

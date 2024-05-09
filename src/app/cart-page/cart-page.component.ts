@@ -33,29 +33,37 @@ export class CartPageComponent implements OnInit {
     })
   }
 
-  loadDetails(){
+  loadDetails() {
     this.product.currentCart().subscribe((result) => {
       this.cartData = result;
       console.warn(this.cartData);
       let price = 0;
-      result.forEach((item) => {
-        if (item.quantity) {
-          price = price + (+item.price * +item.quantity)
+      result.forEach((item: any) => {
+        console.log("Item quantity:", item.quantity);
+        console.log("Item price:", item.price);
+        if (item.quantity && item.price && !isNaN(item.quantity) && !isNaN(item.price)) { // Check if both quantity and price are defined and valid numbers
+          price += (parseFloat(item.price) * parseInt(item.quantity)); // Convert strings to numbers
         }
-      })
+      });
+  
+      console.log("Total price before discounts and tax:", price);
+  
+      // Calculate price summary
       this.priceSummary.price = price;
       this.priceSummary.discount = price / 10;
       this.priceSummary.tax = price / 10;
       this.priceSummary.delivery = 100;
       this.priceSummary.total = price + (price / 10) + 100 - (price / 10);
-
-    if(!this.cartData.length){
-      this.router.navigate(['/'])
-    }
-
-    })
+  
+      console.log("this.priceSummary", this.priceSummary);
+  
+      if (!this.cartData.length) {
+        this.router.navigate(['/']);
+      }
+  
+    });
   }
-
+  
 
 
 
