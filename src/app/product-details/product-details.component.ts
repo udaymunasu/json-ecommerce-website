@@ -16,24 +16,30 @@ export class ProductDetailsComponent implements OnInit {
   cartData: product | undefined;
   relatedProducts: any;
 
+  reviewText: string = '';
+  selectedRating: number = 1;
+
+  reviews: any[] = [];
   allProducts: any;
   constructor(
     private activeRoute: ActivatedRoute,
     private product: ProductService
   ) {}
 
+  productId: any
+
   ngOnInit(): void {
-    let productId = this.activeRoute.snapshot.paramMap.get('productId');
-    console.warn(productId);
-    productId &&
-      this.product.getProduct(productId).subscribe((result) => {
+    this.productId = this.activeRoute.snapshot.paramMap.get('productId');
+    console.warn(this.productId);
+    this.productId &&
+      this.product.getProduct(this.productId).subscribe((result) => {
         this.productData = result;
         console.log('  this.productData ', this.productData);
         let cartData = localStorage.getItem('localCart');
-        if (productId && cartData) {
+        if (this.productId && cartData) {
           let items = JSON.parse(cartData);
           items = items.filter(
-            (item: product) => productId === item.id.toString()
+            (item: product) => this.productId === item.id.toString()
           );
           if (items.length) {
             this.removeCart = true;
@@ -50,7 +56,7 @@ export class ProductDetailsComponent implements OnInit {
           this.product.cartData.subscribe((result) => {
             let item = result.filter(
               (item: product) =>
-                productId?.toString() === item.productId?.toString()
+                this.productId?.toString() === item.productId?.toString()
             );
             if (item.length) {
               this.cartData = item[0];
@@ -61,6 +67,8 @@ export class ProductDetailsComponent implements OnInit {
       });
 
     this.getAllproducts();
+    this.fetchProductReviews( this.productId); // Fetch updated reviews after adding a new one
+
   }
 
   getAllproducts() {
@@ -136,5 +144,55 @@ export class ProductDetailsComponent implements OnInit {
     this.removeCart = false;
   }
 
-  getRelatedProducts() {}
+  fetchProductReviews(productId: number) {
+    // Get reviews for the current product
+    debugger
+    this.product.getProductReviews(productId).subscribe(reviews => {
+      // Process the reviews as needed
+
+      console.log(reviews);
+      this.reviews = reviews
+    }, error => {
+      console.error('Failed to fetch reviews:', error);
+    });
+  }
+
+  submitReview() {
+    if (!this.reviewText || !this.selectedRating) {
+      alert('Please provide review and rating.');
+      return;
+    }
+
+    const userDataString = localStorage.getItem('userData');
+  let userName = 'Anonymous';
+
+  if (userDataString) {
+    const userData = JSON.parse(userDataString);
+    // If user data exists and contains firstname and lastname
+    if (userData.firstname && userData.lastname) {
+      userName = userData.firstname + ' ' + userData.lastname;
+    }
+  }
+
+    // Prepare review data
+    const newReview = {
+      productId: this.productData.id,
+      user: userName,
+      rating: this.selectedRating,
+      comment: this.reviewText
+    };
+
+    // Post new review to API
+    this.product.addReview(newReview).subscribe(() => {
+      // Clear input fields and update reviews
+      this.reviewText = '';
+      this.selectedRating = 1;
+      this.fetchProductReviews( this.productId); // Fetch updated reviews after adding a new one
+      alert('Review submitted successfully!');
+    }, error => {
+      console.error('Failed to submit review:', error);
+      alert('Failed to submit review. Please try again.');
+    });
+  }
+
 }

@@ -1,6 +1,6 @@
 <div class="container">
   <div class="carousel-container">
-    <app-carousel *ngIf="trendyProducts" [slides]="trendyProducts" [slideStep]="300" [interval]="5000">
+    <app-carousel *ngIf="crouselImages" [slides]="crouselImages" [slideStep]="300" [interval]="5000">
     </app-carousel>
   </div>
 
@@ -9,77 +9,94 @@
   <app-card-carousel *ngIf="allProducts" [items]="trendyProducts"></app-card-carousel>
 
   <div class="product-list-wrapper">
-    <h1>Popular Products</h1>
-    <div class="row">
-      <div class="col-sm-3" *ngFor="let item of popularProducts">
-        <div class="product-item">
-          <img src="{{ item.image }}" alt="" />
-          <div class="product-details">
-            <h6 class="name-head" [appTooltip]="item.name" tooltipPosition="left">
-              {{ item.name }}
-            </h6>
-            <div class="product-price">
-              <h6>Price:{{ item.price }}</h6>
-            </div>
-            <div class="product-color">
-              <h6>Color:{{ item.color }}</h6>
-            </div>
-          </div>
-          <div class="buttons">
-            <a [routerLink]="['/details', item.id]" class="detail-btn">View Details</a>
-            <button class="add-to-cart-btn" >Add to Cart</button>
-          </div>
-        </div>
+    <div class="filter-section">
+      <h3>Filter by:</h3>
+      <div>
+        <h4>Color:</h4>
+        <label>
+          <input type="radio" name="color" value="" (change)="applyFilters()"> All
+        </label>
+        <label *ngFor="let color of colors">
+          <input type="radio" name="color" [value]="color" (change)="applyFilters()"> {{ color }}
+        </label>
+      </div>
+
+      <div>
+        <h4>Size:</h4>
+        <label>
+          <input type="radio" name="size" value="" (change)="applyFilters()"> All
+        </label>
+        <label *ngFor="let size of sizes">
+          <input type="radio" name="size" [value]="size" (change)="applyFilters()"> {{ size }}
+        </label>
+      </div>
+
+      <div>
+        <h4>Category:</h4>
+        <label *ngFor="let category of categories">
+          <input type="checkbox" name="category" [value]="category" (change)="applyFilters()"> {{ category }}
+        </label>
       </div>
     </div>
-    <h1>Trendy Products</h1>
-    <div class="row">
-      <div class="col-sm-3" *ngFor="let item of trendyProducts">
-        <div class="product-item">
-          <img src="{{ item.image }}" alt="" />
-          <div class="product-details">
-            <h6 class="name-head" [appTooltip]="item.name" tooltipPosition="left">{{ item.name }}</h6>
-            <div class="product-price">
-              <h6>Price:{{ item.price }}</h6>
-            </div>
-            <div class="product-color">
-              <h6>Color:{{ item.color }}</h6>
-            </div>
-          </div>
-          <div class="buttons">
-            <a [routerLink]="['/details', item.id]" class="detail-btn">View Details</a>
-            <button class="add-to-cart-btn" >Add to Cart</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <h1>All Products</h1>
-
-    <div class="category-container">
-      <div *ngFor="let category of allProducts | keyvalue" class="category">
-        <h2>{{ category.key }}</h2>
-        <div class="product-list">
-          <div *ngFor="let item of category.value" class="product-item">
-            <div class="product-image">
-              <img [src]="item.image" alt="{{ item.name }}" />
-            </div>
+    <div class="product-section">
+      <h1>Popular Products</h1>
+      <div class="row">
+        <div class="col-sm-3" *ngFor="let item of popularProducts">
+          <div class="product-item">
+            <img src="{{ item.image }}" alt="" />
             <div class="product-details">
-              <h3>{{ item.name }}</h3>
+              <h6 class="name-head" [appTooltip]="item.name" tooltipPosition="left">
+                {{ item.name }}
+              </h6>
               <p class="price">$ {{ item.price }}</p>
               <p class="color">Color: {{ item.color }}</p>
-              <div class="buttons">
-                <a [routerLink]="['/details', item.id]" class="detail-btn">View Details</a>
-                <button class="add-to-cart-btn" >Add to Cart</button>
+            </div>
+            <div class="buttons">
+              <a [routerLink]="['/details', item.id]" class="detail-btn">View Details</a>
+              <button class="add-to-cart-btn">Add to Cart</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h1>Trendy Products</h1>
+      <div class="row">
+        <div class="col-sm-3" *ngFor="let item of trendyProducts">
+          <div class="product-item">
+            <img src="{{ item.image }}" alt="" />
+            <div class="product-details">
+              <h6 class="name-head" [appTooltip]="item.name" tooltipPosition="left">{{ item.name }}</h6>
+              <p class="price">$ {{ item.price }}</p>
+              <p class="color">Color: {{ item.color }}</p>
+            </div>
+            <div class="buttons">
+              <a [routerLink]="['/details', item.id]" class="detail-btn">View Details</a>
+              <button class="add-to-cart-btn">Add to Cart</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h1>All Products</h1>
+      <div class="category-container">
+        <div *ngFor="let category of allProducts | keyvalue" class="category">
+          <h2>{{ category.key }}</h2>
+          <div class="product-list">
+            <div *ngFor="let item of category.value" class="product-item">
+              <div class="product-image">
+                <img [src]="item.image" alt="{{ item.name }}" />
+              </div>
+              <div class="product-details">
+                <h3>{{ item.name }}</h3>
+                <p class="price">$ {{ item.price }}</p>
+                <p class="color">Color: {{ item.color }}</p>
+                <div class="buttons">
+                  <a [routerLink]="['/details', item.id]" class="detail-btn">View Details</a>
+                  <button class="add-to-cart-btn">Add to Cart</button>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-
-
-
-
   </div>
 </div>

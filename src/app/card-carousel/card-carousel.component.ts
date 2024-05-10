@@ -53,7 +53,7 @@ export class CardCarouselComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.carouselContainer?.nativeElement) {
       const containerWidth = this.carouselContainer.nativeElement.clientWidth;
       const itemsPerPage = Math.floor(containerWidth / this.itemWidth); // Include partially visible items
-      this.lastIndex = Math.max(0, this.items.length - itemsPerPage - 5);
+      this.lastIndex = Math.max(0, this.items?.length - itemsPerPage - 5);
     }
   }
 
@@ -98,7 +98,7 @@ export class CardCarouselComponent implements OnInit, OnDestroy, AfterViewInit {
 
   goToSlide(index: number) {
     if (index === this.lastIndex) {
-      this.firstVisibleIndex = Math.max(0, this.items.length - 10);
+      this.firstVisibleIndex = Math.max(0, this.items?.length - 10);
       this.position = -this.firstVisibleIndex * this.itemWidth;
     } else {
       this.firstVisibleIndex = index;
@@ -113,7 +113,7 @@ export class CardCarouselComponent implements OnInit, OnDestroy, AfterViewInit {
   updateScrollbar() {
     if (this.carouselContainer) {
         const visibleItemsCount = this.visibleItems();
-        const totalItems = this.items.length;
+        const totalItems = this.items?.length;
         const containerWidth = this.carouselContainer.nativeElement.offsetWidth;
         const thumbWidth = Math.min((visibleItemsCount / totalItems) * 100, (containerWidth / totalItems) * 100);
         const thumbPosition = (this.firstVisibleIndex / (totalItems - visibleItemsCount)) * (100 - thumbWidth);

@@ -1,58 +1,83 @@
-<div class="product-details" *ngIf="productData">
-  <div class="product-image-column">
-    <img class="product-img" src="{{ productData.image }}" alt="" />
-  </div>
-  <div class="product-details-column">
-    <div class="details">
-      <h1>{{ productData.name }}</h1>
-      <h3>Price : {{ productData.price }}</h3>
-      <div class="product-color">
-        Color : {{ productData.color }}
-        <input type="color" [value]="productData.color" />
-        <div
-          [ngStyle]="{
-            'background-color': productData.color,
-            'border-radius': '50%',
-            width: '40px',
-            height: '40px'
-          }"
-        ></div>
-      </div>
-      <div class="product-category">
-        <h3>Category</h3>
-        <ul>
-          <ng-container *ngIf="productData.category; else newDeb">
-            {{ productData.category }}
-          </ng-container>
-          <ng-template #newDeb>
-            <li *ngFor="let item of productData.category.name">
-              {{ item }}
-            </li>
-          </ng-template>
-        </ul>
-      </div>
-      <div class="product-description">
-        <h1>Description</h1>
-        <h3>{{ productData.description }}</h3>
-      </div>
+<div class="product-details-contaoner" *ngIf="productData">
+  <div class="product-details">
+    <div class="product-image-column">
+      <img class="product-img" src="{{ productData.image }}" alt="" />
+    </div>
+    <div class="product-details-column">
+      <div class="details">
+        <h1>{{ productData.name }}</h1>
+        <h3>Price : {{ productData.price }}</h3>
+        <div class="product-color">
+          Color : {{ productData.color }}
+          <input type="color" [value]="productData.color" />
+          <div [ngStyle]="{
+              'background-color': productData.color,
+              'border-radius': '50%',
+              width: '40px',
+              height: '40px'
+            }"></div>
+        </div>
+        <div class="product-category">
+          <h3>Category</h3>
+          <ul>
+            <ng-container *ngIf="productData.category; else newDeb">
+              {{ productData.category }}
+            </ng-container>
+            <ng-template #newDeb>
+              <li *ngFor="let item of productData.category.name">
+                {{ item }}
+              </li>
+            </ng-template>
+          </ul>
+        </div>
+        <div class="product-description">
+          <h1>Description</h1>
+          <h3>{{ productData.description }}</h3>
+        </div>
 
-      <div class="product-detail-buttons">
-        <!-- <button class="form-button">Buy Now</button> -->
-        <button
-          *ngIf="removeCart"
-          class="form-button"
-          (click)="removeToCart(productData.id)"
-        >
-          Remove to Cart
-        </button>
-        <button *ngIf="!removeCart" class="form-button" (click)="addToCart()">
-          Add to Cart
-        </button>
+        <div class="product-detail-buttons">
+          <!-- <button class="form-button">Buy Now</button> -->
+          <button *ngIf="removeCart" class="form-button" (click)="removeToCart(productData.id)">
+            Remove to Cart
+          </button>
+          <button *ngIf="!removeCart" class="form-button" (click)="addToCart()">
+            Add to Cart
+          </button>
+        </div>
+        <div class="quantity-group">
+          <button (click)="handleQuantity('min')">-</button>
+          <input type="text" value="{{ productQuantity }}" />
+          <button (click)="handleQuantity('plus')">+</button>
+        </div>
       </div>
-      <div class="quantity-group">
-        <button (click)="handleQuantity('min')">-</button>
-        <input type="text" value="{{ productQuantity }}" />
-        <button (click)="handleQuantity('plus')">+</button>
+    </div>
+  </div>
+
+  <!-- Review and Rating Section -->
+  <div class="review-section">
+    <h2>Customer Reviews</h2>
+    <div class="user-review">
+      <textarea placeholder="Write your review" [(ngModel)]="reviewText"></textarea>
+      <div class="rating">
+        <label>Rate this product:</label>
+        <select [(ngModel)]="selectedRating">
+          <option value="1">1 Star</option>
+          <option value="2">2 Stars</option>
+          <option value="3">3 Stars</option>
+          <option value="4">4 Stars</option>
+          <option value="5">5 Stars</option>
+        </select>
+      </div>
+      <button (click)="submitReview()">Submit Review</button>
+    </div>
+
+    <!-- Display existing reviews -->
+    <div *ngIf="reviews.length > 0">
+      <h2>Customer Reviews</h2>
+      <div *ngFor="let review of reviews" class="review">
+        <div class="user">User: {{ review.user }}</div>
+        <div class="rating">Rating: {{ review.rating }}</div>
+        <div class="comment">Comment: {{ review.comment }}</div>
       </div>
     </div>
   </div>

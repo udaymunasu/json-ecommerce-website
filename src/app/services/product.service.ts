@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
 import { product, cart, order } from '../data-types';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -19,6 +20,15 @@ export class ProductService {
 
   getCategoryList() {
     return this.http.get<any[]>('http://localhost:3000/productCategory');
+  }
+
+
+  addReview(productData: any): Observable<any> {
+    return this.http.post<any>('http://localhost:3000/reviews', productData);
+  }
+
+  getProductReviews(productId: number): Observable<any[]> {
+    return this.http.get<any[]>(`http://localhost:3000/reviews`, { params: { productId: productId.toString() } });
   }
 
   deleteCategory(id: number) {
